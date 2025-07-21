@@ -1,45 +1,47 @@
 <div class="flex flex-col gap-6">
-    <x-auth-header :title="__('Inciar sesión')" :description="__('Introduce tus credenciales para iniciar sesión')" />
+    <flux:heading level="1" size="xl" class="text-center text-2xl">
+        {{ __('Inciar sesión') }}
+    </flux:heading>
 
     <!-- Session Status -->
     <x-auth-session-status class="text-center" :status="session('status')" />
 
     <form wire:submit="login" class="flex flex-col gap-6">
         <!-- Email Address -->
-        <flux:input
-            wire:model="email"
-            :label="__('Direccion de correo')"
-            type="email"
-            required
-            autofocus
-            autocomplete="email"
-            placeholder="email@example.com"
-        />
+        <div class="relative">
+            <flux:input
+                wire:model="email"
+                type="email"
+                autofocus
+                autocomplete="email"
+                placeholder="Dirección de correo"
+            />
+
+            @error('email')
+                <p class="text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
+            @enderror
+        </div>
 
         <!-- Password -->
         <div class="relative">
             <flux:input
                 wire:model="password"
-                :label="__('Contraseña')"
                 type="password"
-                required
                 autocomplete="current-password"
                 :placeholder="__('Contraseña')"
                 viewable
             />
 
-            @if (Route::has('password.request'))
-                <flux:link class="absolute end-0 top-0 text-sm" :href="route('password.request')" wire:navigate>
-                    {{ __('Olvidaste tu contraseña?') }}
-                </flux:link>
-            @endif
+            @error('password')
+                <p class="text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
+            @enderror
         </div>
 
         <!-- Remember Me -->
         <flux:checkbox wire:model="remember" :label="__('Recuerdame')" />
 
         <div class="flex items-center justify-end">
-            <flux:button variant="primary" type="submit" class="w-full">{{ __('Inciar sesión') }}</flux:button>
+            <flux:button variant="primary" type="submit" class="w-full text-white bg-green-800 hover:bg-green-900 cursor-pointer">{{ __('Inciar sesión') }}</flux:button>
         </div>
     </form>
 

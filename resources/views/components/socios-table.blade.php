@@ -1,33 +1,47 @@
 @props(['socios'])
 
-<table class="w-full text-md">
-    <thead class="bg-green-800">
-        <tr class="text-center">
-            <th class="border dark:border-white border-black"><span>N° socio</th>
-            <th class="border dark:border-white border-black">Nombre</th>
-            <th class="border dark:border-white border-black">Apellido</th>
-            <th class="border dark:border-white border-black">Email</th>
-            <th class="border dark:border-white border-black">Fecha de nacimiento</th>
-            <th class="border dark:border-white border-black">DNI</th>
-            <th class="border dark:border-white border-black">Fecha de inscripción</th>
-            <th class="border dark:border-white border-black">Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($socios as $socio)
-            <tr class="text-center">
-                <td class="border dark:border-white border-black">{{ $socio->id }}</td>
-                <td class="border dark:border-white border-black">{{ $socio->name }}</td>
-                <td class="border dark:border-white border-black">{{ $socio->last_name }}</td>
-                <td class="border dark:border-white border-black">{{ $socio->email }}</td>
-                <td class="border dark:border-white border-black">{{ $socio->date_of_birth }}</td>
-                <td class="border dark:border-white border-black">{{ $socio->dni }}</td>
-                <td class="border dark:border-white border-black">{{ $socio->date_of_registration }}</td>
-                <td class="border dark:border-white border-black">
-                    <button wire:click="destroy({{ $socio->id }})"><flux:icon name="trash"></flux:icon></button>
-                    <button wire:navigate href="{{ route('partners.edit', $socio->id) }}"><flux:icon name="pencil"></flux:icon></button>
-                </td>
-            </tr>
-        @endforeach
-    </tbody>
-</table>
+<div class="rounded-md border-gray-700 border overflow-x-auto">
+    @if ($socios->count() > 0)
+        <table class="w-full h-full text-md">
+            <thead class="border-b border-gray-700">
+                <tr class="text-left dark:hover:bg-gray-800">
+                    <th class="px-4 py-2"><span>N° socio</th>
+                    <th class="px-4 py-2">Nombre completo</th>
+                    <th class="px-4 py-2">DNI</th>
+                    <th class="px-4 py-2">Telefono</th>
+                    <th class="px-4 py-2">Fecha de inscripción</th>
+                    <th class="px-4 py-2">Fecha de nacimiento</th>
+                    <th class="px-4 py-2">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($socios as $socio)
+                    <tr wire:key="socio-{{ $socio->id }}" class="border-b border-gray-700 dark:hover:bg-gray-800">
+                        <td class=" px-4 py-2">{{ $socio->id }}</td>
+                        <td class=" px-4 py-2">{{ $socio->name . ', ' . $socio->last_name }}</td>
+                        <td class=" px-4 py-2">{{ $socio->dni }}</td>
+                        <td class=" px-4 py-2">{{ $socio->phone }}</td>
+                        <td class=" px-4 py-2">{{ $socio->date_of_registration->format('d/m/Y') }}</td>
+                        <td class=" px-4 py-2">{{ $socio->date_of_birth->format('d/m/Y') }}</td>
+                        <td class=" px-4 py-2">
+                            <flux:dropdown position="bottom" align="end">
+                                <flux:button variant="subtle" square icon="ellipsis-vertical"></flux:button>
+                                <flux:menu>
+                                    <flux:menu.item icon="pencil" wire:navigate href="{{ route('partners.edit', $socio->id) }}">Editar</flux:menu.item>
+                                    <flux:menu.item
+                                        icon="trash"
+                                        x-on:click="$wire.showModalToDelete = true; $wire.partnerToDelete = {{ $socio->id }}"
+                                        class="cursor-pointer"
+                                    >Eliminar</flux:menu.item>
+                                    <flux:menu.item icon="eye" wire:navigate href="{{ route('partners.show', $socio->id) }}">Ver</flux:menu.item>
+                                </flux:menu>
+                            </flux:dropdown>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @else
+        <p class="p-4">No se encontraron socios</p>
+    @endif
+</div>
