@@ -24,37 +24,33 @@
                 <flux:input wire:model="address" placeholder="Dirección" type="text" value="{{ old('address') }}" />
                 <flux:input wire:model="phone" placeholder="Teléfono" type="text" value="{{ old('phone') }}" />
             </div>
-            <!-- Debitos  -->
-            <div>
-                <flux:heading size="xl">Debitos asignados</flux:heading>
-                <div class="flex gap-3">
-
-                </div>
-                <div class="flex gap-3 h-full border border-zinc-700">
-                    <table class="w-full">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                            <tr class="text-left">
-                                <th class="">ID</th>
-                                <th class="">Name</th>
-                                <th class="">Monto</th>
-                                <th class="">Asignar</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                            @foreach ($allDebits as $debit)
-                                <tr class="border-b dark:bg-gray-900 dark:border-gray-700">
-                                    <td class="">{{ $debit->id }}</td>
-                                    <td class="">{{ $debit->name }}</td>
-                                    <td class="">${{ $debit->amount }}</td>
-                                    <td class="">
-                                        <flux:checkbox wire:model="debitsToAssign.{{ $debit->id - 1 }}" value="{{ $debit->id }}" />
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        </div>
+    </div>
+    <div class="flex flex-col gap-5 w-full px-10">
+        <flux:heading size="xl">Debitos asignados</flux:heading>
+        <div class="flex gap-3 h-full">
+            <table class="w-full">
+                <thead class="text-xs uppercase">
+                    <tr class="text-left border-b">
+                        <th class="px-2 py-0">ID</th>
+                        <th class="px-2 py-0">Name</th>
+                        <th class="px-2 py-0">Monto</th>
+                        <th class="px-2 py-0">Asignar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($allDebits as $index => $debit)
+                        <tr class="border-b">
+                            <td class="px-2 py-0">{{ $debit->id }}</td>
+                            <td class="px-2 py-0">{{ $debit->name }}</td>
+                            <td class="px-2 py-0">${{ $debit->amount }}</td>
+                            <td class="px-2 py-0">
+                                <flux:checkbox wire:model="debitsToAssign.{{ $index }}" />
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
     <div class="flex items-center gap-4 pl-14">

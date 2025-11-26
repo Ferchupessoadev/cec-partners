@@ -10,12 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('debits', function (Blueprint $table) {
+        Schema::create('partner_debit', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->enum('frequency', ['monthly', 'yearly', 'weekly'])->default('monthly');
-            $table->decimal('amount', 8, 2);
-            $table->softDeletes();
+            $table->foreignId('partner_id')->constrained()->onDelete('cascade');
+            $table->foreignId('debit_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -25,6 +23,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('debits');
+        Schema::dropIfExists('partner_debit');
     }
 };

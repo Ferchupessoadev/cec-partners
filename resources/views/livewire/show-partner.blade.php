@@ -72,4 +72,24 @@
             {{ $partner->phone }}
         </span>
     </div>
+
+    <h2 class="text-2xl">Debitos asignados</h2>
+    <div class="flex flex-col gap-4">
+        <table>
+            <thead>
+                <tr class="text-left border-b">
+                    <th class="text-left">Nombre</th>
+                    <th class="text-left">Monto</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($partner->assignedDebits as $assignedDebit)
+                    <tr class="border-b">
+                        <td>{{ $assignedDebit->debitInstance->name }}</td>
+                        <td>${{ $assignedDebit->debitInstance->amount }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 </div>

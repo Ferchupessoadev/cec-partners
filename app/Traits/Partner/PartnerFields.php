@@ -21,10 +21,10 @@ trait PartnerFields
             'name' => ['required', 'string', 'min:2', 'regex:/^[\pL\s\-]+$/u'],
             'last_name' => ['required', 'string', 'min:2', 'regex:/^[\pL\s\-]+$/u'],
             'dni' => ['required', 'digits_between:7,8'],
-            'email' => ['email'],
+            'email' => ['nullable', 'email'],
             'sexo' => ['required', 'string', 'in:masculino,femenino'],
-            'phone' => ['regex:/^\+?[0-9\s\-]{7,20}$/'],
-            'address' => ['string', 'min:5'],
+            'phone' => ['nullable', 'regex:/^\+?[0-9\s\-]{7,20}$/'],
+            'address' => ['nullable', 'string', 'min:5'],
             'date_of_birth' => ['required', 'date', 'before:today'],
             'date_of_registration' => ['required', 'date', 'before_or_equal:today'],
         ];

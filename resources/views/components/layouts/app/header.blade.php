@@ -20,10 +20,10 @@
                     <flux:navbar.item icon="users" :href="route('partners.index')" :current="request()->routeIs('partners.index')" wire:navigate>
                         {{ __('Socios') }}
                     </flux:navbar.item>
-                    <flux:navbar.item icon="credit-card" :href="route('membership_fee.index')" :current="request()->routeIs('membership_fee.index')" wire:navigate>
+                    <flux:navbar.item icon="credit-card" :href="route('debits.index')" :current="request()->routeIs('debits.index')" wire:navigate>
                         {{ __('Lista de debitos') }}
                     </flux:navbar.item>
-                    <flux:navbar.item icon="credit-card" wire:navigate>
+                    <flux:navbar.item icon="credit-card" :href="route('debitsProcess.index')" :current="request()->routeIs('debitsProcess.index')" wire:navigate>
                         {{ __('Procesar debitos') }}
                     </flux:navbar.item>
                 @endrole
@@ -104,8 +104,11 @@
                         <flux:navlist.item icon="users" :href="route('partners.index')" :current="request()->routeIs('partners.index')" wire:navigate>
                             {{ __('Socios') }}
                         </flux:navlist.item>
-                        <flux:navlist.item icon="credit-card" :href="route('membership_fee.index')" :current="request()->routeIs('membership_fee.index')" wire:navigate>
-                            {{ __('Cuotas') }}
+                        <flux:navlist.item icon="credit-card" :href="route('debits.index')" :current="request()->routeIs('debits.index')" wire:navigate>
+                            {{ __('Lista de debitos') }}
+                        </flux:navlist.item>
+                        <flux:navlist.item icon="credit-card" :href="route('debitsProcess.index')" :current="request()->routeIs('debitsProcess.index')" wire:navigate>
+                            {{ __('Procesar de debitos') }}
                         </flux:navlist.item>
                     @endrole
                 </flux:navlist.group>

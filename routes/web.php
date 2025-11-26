@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Debits\Debits;
+use App\Livewire\Debits\DebitsProcess;
 use App\Livewire\CreatePartner;
 use App\Livewire\EditPartner;
 use App\Livewire\Partner;
@@ -25,6 +26,7 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::get('/partner/{partner}', ShowPartner::class)->name('partners.show');
     Route::get('/partner/{partner}/edit', EditPartner::class)->name('partners.edit');
 
-    // debits
-    Route::get('/debits', Debits::class)->name('membership_fee.index');
+    // Debits
+    Route::get('/debits', Debits::class)->name('debits.index');
+    Route::get('/debits/process', DebitsProcess::class)->name('debitsProcess.index');
 });

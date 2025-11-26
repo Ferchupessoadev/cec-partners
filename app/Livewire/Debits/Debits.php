@@ -13,12 +13,24 @@ class Debits extends Component
     public $name;
     public $nameToDelete;
     public $amount;
+    public $nameToEdit;
+    public $amountToEdit;
 
     protected $rules = [
-        'name' => 'required',
-        'nameToDelete' => 'required',
+        'name' => ['required', 'string', 'max:255'],
+        'nameToDelete' => ['required', 'string', 'max:255'],
         'amount' => ['required', 'numeric', 'min:0'],
+        'nameToEdit' => ['required', 'string', 'max:255'],
+        'amountToEdit' => ['required', 'numeric', 'min:0'],
     ];
+
+    public function loadDebitToEdit(int $debitId)
+    {
+        $debit = AppDebits::find($debitId);
+
+        $this->nameToEdit = $debit->name;
+        $this->amountToEdit = $debit->amount;
+    }
 
     public function createDebit()
     {
@@ -35,11 +47,26 @@ class Debits extends Component
         Flux::modal('create-debit')->close();
     }
 
-    public function deleteDebit($debitId)
+    public function deleteDebit(int $debitId)
     {
         $debit = AppDebits::find($debitId);
 
         $debit->delete();
+    }
+
+    public function editDebit(int $debitId)
+    {
+        $this->validateOnly('nameToEdit');
+        $this->validateOnly('amountToEdit');
+
+        $debit = AppDebits::find($debitId);
+
+        $debit->update([
+            'name' => $this->nameToEdit,
+            'amount' => $this->amountToEdit
+        ]);
+
+        Flux::modal('edit-debit-' . $debitId)->close();
     }
 
     #[Layout('components.layouts.app', ['title' => 'Tabla de Débitos'])]

@@ -9,7 +9,7 @@ class Partner extends Model
 {
     use HasFactory;
 
-    protected $table = 'partner';
+    protected $table = 'partners';
 
     protected $fillable = [
         'name',
@@ -32,7 +32,7 @@ class Partner extends Model
         ];
     }
 
-    public function assignedDebits(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function assignedDebits()
     {
         return $this->hasMany(AssignedDebit::class);
     }

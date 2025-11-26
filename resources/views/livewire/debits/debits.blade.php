@@ -18,7 +18,7 @@
         </div>
     </flux:modal>
     <table class="w-1/2">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase border-b dark:border-gray-700 dark:text-gray-400">
             <tr class="text-left">
                 <th class="px-2 py-3">ID</th>
                 <th class="px-2 py-3">Name</th>
@@ -26,16 +26,32 @@
                 <th class="px-2 py-3">Acciones</th>
             </tr>
         </thead>
-        <tbody class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+        <tbody class="border-b dark:border-gray-700">
             @foreach ($debits as $debit)
-                <tr class="border-b dark:bg-gray-900 dark:border-gray-700">
+                <tr class="border-b dark:border-gray-700">
                     <td class="px-2 py-3">{{ $debit->id }}</td>
                     <td class="px-2 py-3">{{ $debit->name }}</td>
                     <td class="px-2 py-3">${{ $debit->amount }}</td>
-                    <td class="px-2 py-3">
+                    <td class="px-2 py-3 flex gap-2">
                         <flux:icon wire:click="deleteDebit({{ $debit->id }})"  icon="trash" />
+                        <flux:modal.trigger name="edit-debit-{{ $debit->id }}" wire:click="loadDebitToEdit({{ $debit->id }})">
+                            <flux:icon icon="pencil" />
+                        </flux:modal.trigger>
                     </td>
                 </tr>
+                <flux:modal name="edit-debit-{{ $debit->id }}" class="md:w-96">
+                    <div class="space-y-6">
+                        <div>
+                            <flux:heading size="lg">Editar debito</flux:heading>
+                            <flux:text class="mt-2">Completa el siguiente formulario para editar un debito.</flux:text>
+                        </div>
+                        <form class="space-y-10" wire:submit="editDebit({{ $debit->id }})">
+                            <flux:input type="text" label="Nombre" wire:model="nameToEdit" />
+                            <flux:input type="number" label="Monto" wire:model="amountToEdit" />
+                            <flux:button type="submit" class="cursor-pointer" variant="primary">Editar</flux:button>
+                        </form>
+                    </div>
+                </flux:modal>
             @endforeach
         </tbody>
     </table>

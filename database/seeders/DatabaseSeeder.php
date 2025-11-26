@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\DebitInstance;
 use App\Models\Debits;
 use App\Models\Partner;
 use App\Models\Settings;
@@ -25,34 +26,33 @@ class DatabaseSeeder extends Seeder
             'email_verified_at' => now(),
         ]);
 
-        Settings::create([
-            'key' => 'membership_fee',
-            'value' => '15000.00',
-        ]);
-
         $this->call(RoleSeeder::class);
 
         $user->assignRole('user');
         $user->assignRole('admin');
 
-        Debits::create([
+        $activo = Debits::create([
             'name' => 'activo',
             'amount' => '15000.00',
         ]);
 
-        Debits::create([
-            'name' => 'becado',
-            'amount' => '0.00',
+        DebitInstance::create([
+            'name' => $activo->name,
+            'amount' => '15000.00',
+            'due_date' => now()->format('Y-m'),
+            'debits_id' => $activo->id
         ]);
 
-        Debits::create([
-            'name' => 'activo socio',
-            'amount' => '12000.00',
-        ]);
-
-        Debits::create([
+        $socio_cadete = Debits::create([
             'name' => 'socio cadete',
             'amount' => '2000.00',
+        ]);
+
+        DebitInstance::create([
+            'name' => $socio_cadete->name,
+            'amount' => '2000.00',
+            'due_date' => now()->format('Y-m'),
+            'debits_id' => $socio_cadete->id
         ]);
     }
 }

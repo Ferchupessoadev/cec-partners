@@ -11,7 +11,7 @@ class AssignedDebit extends Model
 
     protected $fillable = [
         'partner_id',
-        'debit_instance_id',
+        'debit_instances_id',
         'status',
     ];
 
@@ -22,6 +22,6 @@ class AssignedDebit extends Model
 
     public function debitInstance(): BelongsTo
     {
-        return $this->belongsTo(DebitInstance::class);
+        return $this->belongsTo(DebitInstance::class, 'debit_instances_id');
     }
 }

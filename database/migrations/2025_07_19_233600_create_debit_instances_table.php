@@ -12,11 +12,13 @@ return new class extends Migration {
     {
         Schema::create('debit_instances', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('debit_id')->constrained();
+            $table->foreignId('debits_id')->constrained();
+            $table->string('name');
             $table->decimal('amount', 8, 2);
+            $table->date('due_date');
             $table->timestamps();
 
-            $table->unique(['debit_id', 'partner_id', 'month']);
+            $table->unique(['debits_id', 'due_date']);
         });
     }
 

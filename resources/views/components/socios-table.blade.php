@@ -8,7 +8,6 @@
                     <th class="px-4 py-2"><span>N° socio</th>
                     <th class="px-4 py-2">Nombre completo</th>
                     <th class="px-4 py-2">DNI</th>
-                    <th class="px-4 py-2">Telefono</th>
                     <th class="px-4 py-2">Fecha de inscripción</th>
                     <th class="px-4 py-2">Fecha de nacimiento</th>
                     <th class="px-4 py-2">Acciones</th>
@@ -20,7 +19,6 @@
                         <td class=" px-4 py-2">{{ $socio->id }}</td>
                         <td class=" px-4 py-2">{{ $socio->name . ', ' . $socio->last_name }}</td>
                         <td class=" px-4 py-2">{{ $socio->dni }}</td>
-                        <td class=" px-4 py-2">{{ $socio->phone }}</td>
                         <td class=" px-4 py-2">{{ $socio->date_of_registration->format('d/m/Y') }}</td>
                         <td class=" px-4 py-2">{{ $socio->date_of_birth->format('d/m/Y') }}</td>
                         <td class=" px-4 py-2">
