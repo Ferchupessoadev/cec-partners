@@ -2,8 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\AssignedDebit;
-use App\Models\Debits;
+use App\Models\Debit;
 use App\Models\Partner;
 use App\Traits\Partner\PartnerFields;
 use Livewire\Attributes\Layout;
@@ -18,12 +17,6 @@ class CreatePartner extends Component
     public function mount()
     {
         $this->sexo = 'masculino';
-
-        $debitsCount = Debits::count();
-
-        for ($i = 0; $i < $debitsCount; $i++) {
-            $this->debitsToAssign[] = false;
-        }
     }
 
     protected function rules()
@@ -35,7 +28,9 @@ class CreatePartner extends Component
     {
         $this->validate();
 
-        $newpartner = Partner::create([
+        $selectedIds = array_keys(array_filter($this->debitsToAssign));
+
+        $newPartner = Partner::create([
             ...$this->only([
                 'name', 'last_name', 'email', 'phone',
                 'sexo', 'address', 'dni', 'date_of_birth', 'date_of_registration'
@@ -43,32 +38,17 @@ class CreatePartner extends Component
             'active' => true,
         ]);
 
-        $debits = Debits::all();
+        $newPartner->debits()->sync($selectedIds);
 
-        foreach ($debits as $index => $debit) {
-            $lastInstance = $debit->debitInstances()->orderBy('due_date', 'desc')->first();
-
-            if ($lastInstance && $this->debitsToAssign[$index]) {
-                AssignedDebit::firstOrCreate([
-                    'partner_id' => $newpartner->id,
-                    'debit_instances_id' => $lastInstance->id,
-                ], [
-                    'status' => 'pendiente',
-                ]);
-            }
-        }
-
-        $this->reset();
-
-        return redirect()->route('partners.show', ['partner' => $newpartner]);
+        return redirect()->route('partners.show', $newPartner);
     }
 
     #[Layout('components.layouts.app', ['title' => 'Crear socio'])]
     public function render()
     {
-        $allDebits = Debits::all();
+        $allDebits = Debit::all();
 
-        return view('livewire.create-partner', [
+        return view('livewire.partner.create-partner', [
             'allDebits' => $allDebits,
             'debitsToAssign' => $this->debitsToAssign
         ]);

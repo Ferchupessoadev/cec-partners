@@ -55,6 +55,6 @@ class EditPartner extends Component
     #[Layout('components.layouts.app')]
     public function render(): View
     {
-        return view('livewire.edit-partner');
+        return view('livewire.partner.edit-partner');
     }
 }

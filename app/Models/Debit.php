@@ -2,23 +2,25 @@
 
 namespace App\Models;
 
-use App\Models\DebitInstance;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Debits extends Model
+class Debit extends Model
 {
     use SoftDeletes;
-
-    protected $table = 'debits';
 
     protected $fillable = [
         'name',
         'amount',
     ];
 
-    public function debitInstances()
+    public function partners()
     {
-        return $this->hasMany(DebitInstance::class);
+        return $this->belongsToMany(Partner::class);
+    }
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
     }
 }

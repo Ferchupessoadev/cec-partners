@@ -32,8 +32,13 @@ class Partner extends Model
         ];
     }
 
-    public function assignedDebits()
+    public function debits()
     {
-        return $this->hasMany(AssignedDebit::class);
+        return $this->belongsToMany(Debit::class);
+    }
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
     }
 }

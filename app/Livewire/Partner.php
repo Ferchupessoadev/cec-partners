@@ -50,6 +50,6 @@ class Partner extends Component
             ->orderBy('id')
             ->paginate(8);
 
-        return view('livewire.socios', ['socios' => $socios]);
+        return view('livewire.partner.socios', ['socios' => $socios]);
     }
 }

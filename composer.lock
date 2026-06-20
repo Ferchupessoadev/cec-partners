@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "85e385488dab02956274ea97d50d1c6a",
+    "content-hash": "fa8bcd295bc71f82e070aa1674bdfb7f",
     "packages": [
         {
             "name": "archtechx/enums",
@@ -2942,16 +2942,16 @@
         },
         {
             "name": "livewire/flux",
-            "version": "v2.2.3",
+            "version": "v2.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/livewire/flux.git",
-                "reference": "0fb4c0b78eac393ad3a19a387af193573c310371"
+                "reference": "11f04bca8cd57e05d594a96188c26f0c118c4c4f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/livewire/flux/zipball/0fb4c0b78eac393ad3a19a387af193573c310371",
-                "reference": "0fb4c0b78eac393ad3a19a387af193573c310371",
+                "url": "https://api.github.com/repos/livewire/flux/zipball/11f04bca8cd57e05d594a96188c26f0c118c4c4f",
+                "reference": "11f04bca8cd57e05d594a96188c26f0c118c4c4f",
                 "shasum": ""
             },
             "require": {
@@ -2959,9 +2959,12 @@
                 "illuminate/support": "^10.0|^11.0|^12.0",
                 "illuminate/view": "^10.0|^11.0|^12.0",
                 "laravel/prompts": "^0.1|^0.2|^0.3",
-                "livewire/livewire": "^3.5.19",
+                "livewire/livewire": "^3.5.19|^4.0",
                 "php": "^8.1",
                 "symfony/console": "^6.0|^7.0"
+            },
+            "conflict": {
+                "livewire/blaze": "<1.0.0"
             },
             "type": "library",
             "extra": {
@@ -2999,9 +3002,9 @@
             ],
             "support": {
                 "issues": "https://github.com/livewire/flux/issues",
-                "source": "https://github.com/livewire/flux/tree/v2.2.3"
+                "source": "https://github.com/livewire/flux/tree/v2.10.1"
             },
-            "time": "2025-07-11T00:25:51+00:00"
+            "time": "2025-12-17T23:17:22+00:00"
         },
         {
             "name": "livewire/livewire",

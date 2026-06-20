@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Debits;
 
-use App\Models\Debits as AppDebits;
+use App\Models\Debit;
 use Flux\Flux;
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
@@ -26,7 +26,7 @@ class Debits extends Component
 
     public function loadDebitToEdit(int $debitId)
     {
-        $debit = AppDebits::find($debitId);
+        $debit = Debit::find($debitId);
 
         $this->nameToEdit = $debit->name;
         $this->amountToEdit = $debit->amount;
@@ -37,7 +37,7 @@ class Debits extends Component
         $this->validateOnly('name');
         $this->validateOnly('amount');
 
-        AppDebits::create([
+        Debit::create([
             'name' => $this->name,
             'amount' => $this->amount,
         ]);
@@ -49,7 +49,7 @@ class Debits extends Component
 
     public function deleteDebit(int $debitId)
     {
-        $debit = AppDebits::find($debitId);
+        $debit = Debit::find($debitId);
 
         $debit->delete();
     }
@@ -59,7 +59,7 @@ class Debits extends Component
         $this->validateOnly('nameToEdit');
         $this->validateOnly('amountToEdit');
 
-        $debit = AppDebits::find($debitId);
+        $debit = Debit::find($debitId);
 
         $debit->update([
             'name' => $this->nameToEdit,
@@ -73,7 +73,7 @@ class Debits extends Component
     public function render(): View
     {
         return view('livewire.debits.debits', [
-            'debits' => AppDebits::all(),
+            'debits' => Debit::all(),
         ]);
     }
 }

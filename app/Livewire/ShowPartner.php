@@ -19,7 +19,7 @@ class ShowPartner extends Component
     #[Layout('components.layouts.app', ['title' => 'Detalle socio'])]
     public function render(): View
     {
-        return view('livewire.show-partner', [
+        return view('livewire.partner.show-partner', [
             'partner' => $this->partner
         ]);
     }

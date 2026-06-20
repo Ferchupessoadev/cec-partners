@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\DebitInstance;
-use App\Models\Debits;
+use App\Models\Debit;
+use App\Models\Invoice;
 use App\Models\Partner;
-use App\Models\Settings;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -17,8 +16,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Partner::factory(100)->create();
-
+        // 1. Crear el usuario administrador
         $user = User::create([
             'name' => 'Fernando',
             'email' => 'fernandomatiaspessoa471@gmail.com',
@@ -27,32 +25,25 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call(RoleSeeder::class);
-
-        $user->assignRole('user');
         $user->assignRole('admin');
 
-        $activo = Debits::create([
-            'name' => 'activo',
-            'amount' => '15000.00',
-        ]);
+        $activo = Debit::create(['name' => 'activo', 'amount' => '15000.00', 'frequency' => 'monthly']);
+        $socio_cadete = Debit::create(['name' => 'socio cadete', 'amount' => '2000.00', 'frequency' => 'monthly']);
 
-        DebitInstance::create([
-            'name' => $activo->name,
-            'amount' => '15000.00',
-            'due_date' => now()->format('Y-m'),
-            'debits_id' => $activo->id
-        ]);
+        Partner::factory(5)->create()->each(function ($partner) use ($activo, $socio_cadete) {
 
-        $socio_cadete = Debits::create([
-            'name' => 'socio cadete',
-            'amount' => '2000.00',
-        ]);
+            $partner->debits()->attach([$activo->id, $socio_cadete->id]);
 
-        DebitInstance::create([
-            'name' => $socio_cadete->name,
-            'amount' => '2000.00',
-            'due_date' => now()->format('Y-m'),
-            'debits_id' => $socio_cadete->id
-        ]);
+            foreach ([$activo, $socio_cadete] as $debit) {
+                Invoice::create([
+                    'partner_id' => $partner->id,
+                    'debit_id'  => $debit->id,
+                    'amount'     => $debit->amount,
+                    'period'     => now()->format('Y-m'),
+                    'status'     => 'pendiente',
+                    'due_date'   => now()->addMonth(),
+                ]);
+            }
+        });
     }
 }
